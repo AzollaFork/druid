@@ -2652,4 +2652,20 @@ public interface SQLASTVisitor {
         return true;
     }
 
+  default boolean visit(SQLAlterTableSetSerdeProperties x) {
+    return false;
+  }
+
+  default void endVisit(SQLAlterTableSetSerdeProperties x) {
+
+  }
+
+  default boolean visit(SQLAlterTableSetTblProperties x) {
+    return false;
+  }
+
+  default void endVisit(SQLAlterTableSetTblProperties x) {
+
+  }
+
 }

@@ -1892,6 +1892,14 @@ public class SQLStatementParser extends SQLParser {
                         lexer.nextToken();
                         SQLAlterTableDisableLifecycle item = new SQLAlterTableDisableLifecycle();
                         stmt.addItem(item);
+                    } else if (lexer.identifierEquals("SERDEPROPERTIES")) {
+                        lexer.nextToken();
+                        SQLAlterTableSetSerdeProperties item = parseAlterTableSetSerdeProperties();
+                        if(item != null) stmt.addItem(item);
+                    } else if (lexer.identifierEquals("TBLPROPERTIES")) {
+                        lexer.nextToken();
+                        SQLAlterTableSetTblProperties item = parseAlterTableSetTblProperties();
+                        if(item != null) stmt.addItem(item);
                     } else {
                         acceptIdentifier("KEYS");
                         SQLAlterTableDisableKeys item = new SQLAlterTableDisableKeys();
@@ -6996,4 +7004,12 @@ public class SQLStatementParser extends SQLParser {
         }
         return stmt;
     }
+
+  protected SQLAlterTableSetSerdeProperties parseAlterTableSetSerdeProperties(){
+      return null;
+  }
+
+  protected SQLAlterTableSetTblProperties parseAlterTableSetTblProperties(){
+      return null;
+  }
 }

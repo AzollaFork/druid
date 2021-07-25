@@ -544,4 +544,40 @@ public class HiveStatementParser extends SQLStatementParser {
     public HiveExprParser getExprParser() {
         return (HiveExprParser) exprParser;
     }
+
+  protected SQLAlterTableSetSerdeProperties parseAlterTableSetSerdeProperties(){
+    this.lexer.nextToken();
+    SQLAlterTableSetSerdeProperties props = new SQLAlterTableSetSerdeProperties();
+    accept(Token.LPAREN);
+    while(true){
+      String name = this.lexer.stringVal();
+      this.lexer.nextToken();
+      accept(Token.EQ);
+      SQLExpr value = this.exprParser.expr();
+      value.setParent(props);
+      props.getProperties().put(name, value);
+      if(this.lexer.token() != Token.COMMA) break;
+      this.lexer.nextToken();
+    }
+    accept(Token.RPAREN);
+    return props;
+  }
+
+  protected SQLAlterTableSetTblProperties parseAlterTableSetTblProperties(){
+    this.lexer.nextToken();
+    SQLAlterTableSetTblProperties props = new SQLAlterTableSetTblProperties();
+    accept(Token.LPAREN);
+    while(true){
+      String name = this.lexer.stringVal();
+      this.lexer.nextToken();
+      accept(Token.EQ);
+      SQLExpr value = this.exprParser.expr();
+      value.setParent(props);
+      props.getProperties().put(name, value);
+      if(this.lexer.token() != Token.COMMA) break;
+      this.lexer.nextToken();
+    }
+    accept(Token.RPAREN);
+    return props;
+  }
 }
